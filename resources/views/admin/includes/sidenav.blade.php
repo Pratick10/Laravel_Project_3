@@ -67,11 +67,26 @@
                 </div>
                 
             @endif
-            
+            @if(Session::has('userrole') && Session:: get('userrole') == 'student')
+                
+                
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#subject" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Enroll
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="subject" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{ URL::to('enroll') }}">Requested Subject</a>
+                        <a class="nav-link" href="{{ URL::to('create-enroll') }}">Request Subject</a>
+                    </nav>
+                </div>
+                
+            @endif
         </div>
     </div>
     <div class="sb-sidenav-footer">
-        <div class="small">Logged in as: {{ Session::get('username')}}</div>
+        <div class="small">Logged in as: {{ Session::get('username')}} </div>
 <!-- {{--        @if(Session::has('userrole') && Session:: get('userrole') == 'admin')--}}
 {{--            <p>Admin</p>--}}
 {{--        @endif--}}

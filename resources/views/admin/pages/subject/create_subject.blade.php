@@ -7,7 +7,7 @@
             <li class="breadcrumb-item active">Dashboard</li>
         </ol>
         <div class="card">
-        @if(Session::has('msg'))
+            @if(Session::has('msg'))
                             <div class="alert alert-primary">
                                 <strong>{{Session::get('msg')}}</strong>
                             </div>
@@ -37,18 +37,21 @@
     <div class="form-group">
     <label for="">Subject Type</label>
                     <select class="form-control" name="sub_type">
-                        <option > select type</option>
+                        <option value="">Select Option</option>
+                        {{-- @foreach ($subjects as $item)
+                            <option value=" {{$item->id}} "> {{$item->sub_type}} </option>
+                        @endforeach --}}
                         <option value="theory">Theory</option>
                         <option value="lab">Lab</option>
                     </select>
-                    <span class="error">{{ $errors->first('sub_type') }}</span>
+                    {{-- <span class="error">{{ $errors->first('sub_type') }}</span> --}}
                 </div>
 
 
     <div class="form-group">
         <label for=""></label>
         <button type="submit" class="btn btn-success">Submit</button>
-        <a  class="btn btn-primary m-b-10" href="{{URL::to('subjects')}}">All Subject</a>
+        <a  class="btn btn-primary m-b-10" href="{{URL::to('subject')}}">All Subject</a>
 
     </div>
 

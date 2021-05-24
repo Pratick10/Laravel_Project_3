@@ -4,21 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subject;
-
+use Illuminate\Support\Facades\DB;
 class SubjectController extends Controller
 {
     public function index(){
         $subjects = Subject::all();
+        // $subjects = Subject::join('subject_types','subjects.sub_type','subject_types.id')
+        //    ->select('subjects.id','subjects.sub_name as subjects','subjects.sub_code','subjects.sub_shortname',
+        //    'subject_types.sub_type as sub_type')
+        //    ->orderBy('subjects.id')
+        //    ->get();
+        // $subjects = DB::table('subjects')  //query builder is faster than eloquent
+        //             ->join('subject_types','subjects.sub_type','subject_types.id')
+        //             ->select('subjects.id','subjects.sub_name as subject','subjects.sub_code',
+        //             'subjects.sub_shortname','subject_types.sub_type as sub_type')
+        //             ->orderBy('subjects.id', 'asc')
+        //             ->get();
         return view('admin.pages.subject.subject',compact('subjects'));
     }
-    public function create(){
+    public function create(){ 
+        
         return view('admin.pages.subject.create_subject');
     }
     public function store(Request $request){
+        
         $validated = $request->validate([
-            'sub_name' => 'required',
-            'sub_code' => 'required',
-            'sub_shortname' => 'required',
+            'sub_name' => 'required|unique:subjects,sub_name',
+            'sub_code' => 'required|unique:subjects,sub_code',
+            'sub_shortname' => 'required|unique:subjects,sub_shortname',
             'sub_type' => 'required',
             // 'student_id' => 'required|section|unique:sections,section',
             // 'dob' => 'required|date_format:Y-m-d|before_or_equal:'.$todayDate,
@@ -57,8 +70,8 @@ class SubjectController extends Controller
     }
     public function edit($id){
         //$employee=Employee::where('id','=',$id)->get();
-        $subject=Subject::find($id);
-        return view('admin.pages.editsubject',compact('subject'));
+        $subjects=Subject::find($id);
+        return view('admin.pages.subject.edit_subject',compact('subjects'));
     }
     public function update(Request $request,$id){
         $subject=Subject::find($id);
@@ -69,7 +82,7 @@ class SubjectController extends Controller
 
 
         if($subject->save()){
-            return redirect()->to('subjects');
+            return redirect()->to('subject');
            //echo'upate';
         }
 
@@ -78,7 +91,7 @@ class SubjectController extends Controller
         $subject=Subject::find($id);
         //echo 'Name is: '.$employee->name;
         if($subject->delete()){
-            return  redirect()->to('subjects');
+            return  redirect()->to('subject');
         }
     }
 }

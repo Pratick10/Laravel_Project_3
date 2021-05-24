@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Models\Student;
 
 class AuthController extends Controller
@@ -20,8 +20,8 @@ class AuthController extends Controller
         $password = $request->password;
 
         $emp = Student::where('email','=',$email)
-                         ->where('password','=',$password)
-                         ->first();
+                        ->where('password','=',$password)
+                        ->first();
 //        echo $emp->created_at;
 //        dd($emp);
         if($emp)
@@ -29,8 +29,10 @@ class AuthController extends Controller
             //set data in session
             $name=$emp->name;
             $role=$emp->role;
+            $id=$emp->id;
             Session::put('username', $name);
             Session::put('userrole', $role);
+            Session::put('id', $id);
 
             return redirect()->to('dashboard');
         }

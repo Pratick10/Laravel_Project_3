@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\EnrollmentController;
 
 
 /*
@@ -130,3 +131,8 @@ Route::post('store-subject',[SubjectController::class,'store']);
 Route::get('edit-subject/{id}',[SubjectController::class,'edit']);
 Route::post('update-subject/{id}',[SubjectController::class,'update']);
 Route::get('delete-subject/{id}',[SubjectController::class,'delete']);
+
+#Enrollment
+Route::get('enroll', [EnrollmentController::class,'index']);
+Route::get('create-enroll', [EnrollmentController::class,'indexrequest']);
+Route::post('store-enroll',[EnrollmentController::class,'storerequest']);
